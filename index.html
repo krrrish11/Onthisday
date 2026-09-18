@@ -3,344 +3,579 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>On This Day — Archive</title>
+<title>Field Sketchbook — On This Day</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Literata:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --page: #f3eee9;
-    --panel: #765858;
-    --panel-deep: #654b4b;
-    --card: #ffffff;
-    --soft: #eee8e3;
-    --text: #171515;
-    --muted: #6d6662;
-    --accent: #d8a34b;
-    --accent-dark: #91453d;
-    --line: rgba(255,255,255,.18);
-    --line-strong: rgba(255,255,255,.32);
-    --shadow: 0 22px 55px rgba(43, 27, 27, .18);
-    --radius: 18px;
+    --paper: #F3ECDD;
+    --paper-deep: #E9DFC8;
+    --ink: #2E2A22;
+    --ink-soft: #6E6656;
+    --sage: #6B7C59;
+    --rust: #B4552F;
+    --pencil: #9B927D;
+    --fold: #DCD0AE;
+    --card: #FBF7EC;
+    --line: rgba(46,42,34,0.14);
   }
-
   *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-
+  html,body{margin:0;}
   body{
     min-height:100vh;
-    background:var(--page);
-    color:var(--text);
-    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    padding:32px;
+    background:
+      radial-gradient(circle at 20% 15%, rgba(107,124,89,0.06), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(180,85,47,0.05), transparent 45%),
+      repeating-linear-gradient(0deg, rgba(46,42,34,0.018) 0px, rgba(46,42,34,0.018) 1px, transparent 1px, transparent 3px),
+      var(--paper);
+    color: var(--ink);
+    font-family: 'Literata', serif;
+    padding: 30px 18px 70px;
+  }
+  .hand{ font-family: 'Caveat', cursive; }
+  .sans{ font-family: 'Inter', sans-serif; }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
   }
 
-  .mono{font-family:"IBM Plex Mono",monospace;}
-
-  body::before{
-    content:"";
-    position:fixed;
-    width:420px;
-    height:420px;
-    border-radius:50%;
-    background:rgba(118,88,88,.08);
-    top:-230px;
-    right:-160px;
-    pointer-events:none;
-  }
-
+  /* ---- Header ---- */
   header{
-    width:min(1120px,100%);
-    min-height:190px;
-    margin:0 auto;
-    padding:42px clamp(24px,5vw,58px);
-    background:var(--panel);
-    border:0;
-    border-radius:24px 24px 0 0;
-    box-shadow:var(--shadow);
-    display:grid;
-    grid-template-columns:minmax(0,1fr) auto;
-    align-items:center;
-    gap:34px;
+    position: relative;
+    padding: 30px 8px 22px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 20px;
   }
+  .leaf{ position: absolute; opacity: 0.55; pointer-events: none; }
+  .leaf.tl{ top: -6px; left: -10px; transform: rotate(-12deg); }
+  .leaf.tr{ top: 4px; right: 6px; transform: rotate(18deg) scaleX(-1); }
 
   .masthead .kicker{
-    margin:0 0 10px;
-    color:rgba(255,255,255,.72);
-    font-family:"IBM Plex Mono",monospace;
-    font-size:12px;
-    font-weight:600;
-    letter-spacing:.12em;
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    color: var(--sage);
+    margin: 0 0 4px;
+    text-transform: uppercase;
   }
-
   .masthead h1{
-    margin:0;
-    color:#fff;
-    font-size:clamp(38px,6vw,68px);
-    font-weight:750;
-    letter-spacing:-2.8px;
-    line-height:.98;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: clamp(40px, 6vw, 60px);
+    margin: 0;
+    line-height: 0.95;
+    color: var(--ink);
   }
-
   .masthead .sub{
-    margin:14px 0 0;
-    color:rgba(255,255,255,.75);
-    font-size:14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 8px 0 0;
   }
 
   .dial{
-    min-width:320px;
-    padding:18px;
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.2);
-    border-radius:16px;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    border: 1.5px solid var(--ink);
+    border-radius: 3px 12px 3px 12px;
+    padding: 10px 12px;
+    box-shadow: 3px 3px 0 var(--fold);
   }
-
   .dial select{
-    appearance:none;
-    width:100%;
-    min-height:46px;
-    padding:0 13px;
-    background:#fff;
-    color:var(--text);
-    border:1px solid transparent;
-    border-radius:10px;
-    font:500 13px "IBM Plex Mono",monospace;
-    cursor:pointer;
-    outline:none;
+    appearance: none;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--pencil);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    padding: 4px 4px;
+    cursor: pointer;
   }
-
-  .dial select:focus-visible{
-    box-shadow:0 0 0 3px rgba(255,255,255,.3);
-  }
-
-  .dial select option{background:#fff;color:var(--text);}
-
-  .dial .slash{display:none;}
-
+  .dial select:focus-visible{ outline: 2px solid var(--rust); outline-offset: 2px; }
   .dial button{
-    grid-column:1 / -1;
-    min-height:42px;
-    margin:2px 0 0;
-    background:var(--accent);
-    color:#261d13;
-    border:0;
-    border-radius:10px;
-    font:700 12px "IBM Plex Mono",monospace;
-    letter-spacing:.03em;
-    cursor:pointer;
-    transition:transform .15s ease,filter .15s ease;
+    margin-left: 4px;
+    background: var(--sage);
+    color: var(--card);
+    border: 1.5px solid var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 7px 13px;
+    border-radius: 3px 10px 3px 10px;
+    cursor: pointer;
+  }
+  .dial button:hover{ filter: brightness(1.08); }
+  .dial button:focus-visible{ outline: 2px solid var(--ink); outline-offset: 2px; }
+
+  /* ---- Category tabs styled as bookmark ribbons ---- */
+  .cats{
+    display: flex;
+    gap: 6px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  .cats button{
+    background: var(--paper-deep);
+    border: 1.5px solid var(--ink);
+    border-bottom: none;
+    color: var(--ink-soft);
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    padding: 8px 16px 10px;
+    cursor: pointer;
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    top: 2px;
+  }
+  .cats button.active{
+    background: var(--card);
+    color: var(--rust);
+    font-weight: 600;
+    border-color: var(--ink);
+    top: 0;
+  }
+  .cats button:hover:not(.active){ color: var(--ink); }
+
+  /* ---- Layout: index sidebar + plates ---- */
+  .layout{
+    display: grid;
+    grid-template-columns: 190px minmax(0,1fr);
+    gap: 30px;
+    align-items: start;
   }
 
-  .dial button:hover{filter:brightness(1.06);transform:translateY(-1px);}
-  .dial button:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+  .index-col{
+    position: sticky;
+    top: 20px;
+    border-right: 1.5px dashed var(--pencil);
+    padding-right: 18px;
+  }
+  .index-col .idx-label{
+    font-family: 'Caveat', cursive;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--sage);
+    margin: 0 0 10px;
+  }
+  .index-col ol{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: idx;
+  }
+  .index-col li{
+    counter-increment: idx;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+    padding-left: 22px;
+    position: relative;
+    cursor: pointer;
+  }
+  .index-col li::before{
+    content: counter(idx);
+    position: absolute;
+    left: 0; top: 0;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--rust);
+  }
+  .index-col li:hover{ color: var(--ink); }
+  .index-col li .yr-tag{ font-weight: 600; color: var(--ink); }
 
-  nav.tabs{
-    width:min(1120px,100%);
-    margin:0 auto;
-    padding:20px clamp(24px,5vw,58px) 0;
-    background:var(--panel);
-    display:flex;
-    gap:9px;
+  .index-empty{ font-family:'Inter',sans-serif; font-size:12px; color: var(--pencil); }
+
+  /* ---- Plates ---- */
+  .plates{ display: flex; flex-direction: column; gap: 22px; }
+
+  .plate{
+    position: relative;
+    background: var(--card);
+    border: 1.5px solid var(--ink);
+    border-radius: 4px 16px 4px 16px;
+    padding: 20px 26px 22px;
+    box-shadow: 4px 5px 0 var(--fold), 0 10px 24px rgba(46,42,34,0.08);
+  }
+  .plate:nth-child(even){ transform: rotate(-0.35deg); }
+  .plate:nth-child(odd){ transform: rotate(0.3deg); }
+
+  /* torn/curled page corner */
+  .plate::after{
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 0 0 26px 26px;
+    border-color: transparent transparent var(--fold) transparent;
+    box-shadow: -3px -3px 7px rgba(46,42,34,0.18);
+    border-bottom-right-radius: 3px;
   }
 
-  nav.tabs button{
-    flex:0 0 auto;
-    min-width:115px;
-    padding:12px 18px;
-    background:rgba(255,255,255,.08);
-    color:rgba(255,255,255,.68);
-    border:1px solid rgba(255,255,255,.16);
-    border-radius:10px 10px 0 0;
-    font:700 11px "IBM Plex Mono",monospace;
-    letter-spacing:.05em;
-    text-transform:uppercase;
-    cursor:pointer;
-    transition:background .15s ease,color .15s ease;
+  .plate .yr{
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 30px;
+    color: var(--rust);
+    line-height: 1;
+    margin: 0 0 8px;
   }
-
-  nav.tabs button.active{
-    color:var(--text);
-    background:var(--card);
-    border-color:var(--card);
+  .plate .txt{
+    font-size: 16.5px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 0 0 12px;
   }
-
-  nav.tabs button:hover:not(.active){color:#fff;background:rgba(255,255,255,.13);}
-  nav.tabs button:focus-visible{outline:2px solid #fff;outline-offset:-2px;}
-
-  main{
-    width:min(1120px,100%);
-    margin:0 auto;
-    background:var(--card);
-    border:0;
-    border-radius:0 0 24px 24px;
-    min-height:390px;
-    padding:0;
-    box-shadow:var(--shadow);
-    overflow:hidden;
+  .plate .refs{ display: flex; flex-wrap: wrap; gap: 6px 14px; font-family: 'Inter', sans-serif; }
+  .plate .refs a{
+    font-size: 11.5px;
+    color: var(--sage);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--sage);
+  }
+  .plate .refs a:hover{ color: var(--rust); border-color: var(--rust); }
+  .plate .thumb{
+    width: 68px; height: 68px;
+    object-fit: cover;
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
+    float: left;
+    margin: 0 14px 8px 0;
+    filter: sepia(0.15) contrast(1.02);
   }
 
   .state-msg{
-    min-height:300px;
-    padding:90px 24px;
-    display:grid;
-    place-items:center;
-    text-align:center;
-    color:var(--muted);
-    font:500 13px "IBM Plex Mono",monospace;
-  }
-
-  .entry{
-    display:grid;
-    grid-template-columns:82px 82px minmax(0,1fr);
-    gap:22px;
-    align-items:start;
-    padding:25px clamp(24px,4vw,42px);
-    border-bottom:1px solid var(--soft);
-  }
-
-  .entry:last-child{border-bottom:0;}
-
-  .entry .year{
-    padding-top:3px;
-    color:var(--accent-dark);
-    font:700 14px "IBM Plex Mono",monospace;
-  }
-
-  .entry .body{min-width:0;}
-
-  .entry .text{
-    margin:0 0 10px;
-    color:var(--text);
-    font-size:17px;
-    font-weight:500;
-    line-height:1.62;
-  }
-
-  .entry .refs{
-    display:flex;
-    flex-wrap:wrap;
-    gap:7px 14px;
-  }
-
-  .entry .refs a{
-    color:var(--accent-dark);
-    text-decoration:none;
-    border-bottom:1px dotted currentColor;
-    font:500 11px "IBM Plex Mono",monospace;
-  }
-
-  .entry .refs a:hover{color:var(--panel);}
-
-  .entry .thumb{
-    width:82px;
-    height:82px;
-    object-fit:cover;
-    border-radius:12px;
-    border:1px solid var(--border);
-    background:var(--soft);
+    font-family: 'Inter', sans-serif;
+    color: var(--ink-soft);
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 13.5px;
+    background: var(--card);
+    border: 1.5px dashed var(--pencil);
+    border-radius: 6px;
   }
 
   footer{
-    width:min(1120px,100%);
-    margin:18px auto 0;
-    color:#817873;
-    text-align:center;
-    font:500 10px "IBM Plex Mono",monospace;
-    opacity:.8;
+    max-width: 1080px; margin: 26px auto 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--pencil);
+    text-align: center;
   }
 
-  @media (prefers-reduced-motion:reduce){
-    *{transition:none!important;}
+  /* ---- Draggable magnifying glass (grab and move over a plate) ---- */
+  #magnifier{
+    position: fixed;
+    width: 210px;
+    height: 210px;
+    z-index: 50;
+    cursor: grab;
+    touch-action: none;
+    filter: drop-shadow(6px 14px 14px rgba(30,24,14,0.35));
+  }
+  #magnifier.dragging{ cursor: grabbing; }
+  #magnifier .handle{
+    position: absolute;
+    width: 20px;
+    height: 100px;
+    left: 126.6px;
+    top: 136.6px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #4a3420 0%, #7a5732 22%, #9c7645 45%, #6b4c2a 65%, #3d2c18 100%);
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.4);
+    transform: rotate(-45deg);
+    transform-origin: top center;
+  }
+  #magnifier .ferrule{
+    position: absolute;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    left: 122.6px; top: 122.6px;
+    background: radial-gradient(circle at 35% 30%, #e7c375, #a9782f 55%, #6b4d1f 100%);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  }
+  #magnifier .ring{
+    position: absolute;
+    top: 0; left: 0;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, #f3d78a, #c9993f 45%, #8a6425 75%, #5c4318 100%);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3), inset 0 0 6px rgba(0,0,0,0.25);
+  }
+  #lens{
+    position: absolute;
+    top: 8px; left: 8px;
+    width: 144px; height: 144px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--card);
+    box-shadow: inset 0 0 14px rgba(0,0,0,0.15);
+  }
+  #lens::after{
+    content: '';
+    position: absolute;
+    top: -30%; left: 55%;
+    width: 26%; height: 130%;
+    background: rgba(255,255,255,0.22);
+    transform: rotate(20deg);
+    pointer-events: none;
+  }
+  #lensContent{
+    position: absolute;
+    top: 0; left: 0;
+    transform-origin: 0 0;
+    pointer-events: none;
+  }
+  .lens-empty{
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5px;
+    color: var(--pencil);
+    text-align: center;
+    padding: 10px;
+    background: var(--paper-deep);
   }
 
-  @media (max-width:780px){
-    body{padding:16px;}
-
-    header{
-      grid-template-columns:1fr;
-      gap:26px;
-      padding:30px 22px 24px;
-      border-radius:20px 20px 0 0;
+  @media (max-width: 780px){
+    .layout{ grid-template-columns: 1fr; }
+    .index-col{
+      position: static;
+      border-right: none;
+      border-bottom: 1.5px dashed var(--pencil);
+      padding: 0 0 14px;
     }
+    #magnifier{ width: 150px; height: 150px; }
+    #magnifier .ring{ width: 115px; height: 115px; }
+    #lens{ width: 99px; height: 99px; top: 8px; left: 8px; }
+    #magnifier .handle{ left: 90.7px; top: 98.2px; height: 72px; width: 15px; }
+    #magnifier .ferrule{ left: 87.2px; top: 87.2px; width: 21px; height: 21px; }
+  }
+  @media (prefers-reduced-motion: reduce){ *{ transition: none !important; } }
 
-    .dial{min-width:0;}
+  /* ---- Plate click affordance ---- */
+  .plate{ cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  .plate:hover{ box-shadow: 5px 6px 0 var(--fold), 0 14px 30px rgba(46,42,34,0.14); }
+  .plate .refs a{ cursor: pointer; }
 
-    nav.tabs{
-      padding:16px 16px 0;
-      overflow-x:auto;
-    }
+  /* ---- Detail view ---- */
+  #detailView{ max-width: 720px; margin: 0 auto; }
+  .back-btn{
+    background: var(--card);
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 16px;
+    border-radius: 3px 10px 3px 10px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    box-shadow: 3px 3px 0 var(--fold);
+  }
+  .back-btn:hover{ background: var(--paper-deep); }
 
-    nav.tabs button{
-      min-width:100px;
-    }
+  .detail-plate{ cursor: default; padding: 30px 32px 34px; }
+  .detail-plate:hover{ box-shadow: 4px 5px 0 var(--fold), 0 10px 24px rgba(46,42,34,0.08); }
+  .detail-type{
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sage);
+    background: var(--paper-deep);
+    border: 1px solid var(--sage);
+    border-radius: 20px;
+    padding: 4px 12px;
+    margin-bottom: 10px;
+  }
+  .detail-year{ font-size: 44px; margin: 4px 0 14px; }
+  .detail-text{ font-size: 19px; line-height: 1.75; }
 
-    main{border-radius:0 0 20px 20px;}
+  .detail-page{
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1.5px dashed var(--pencil);
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .detail-img{
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border: 1.5px solid var(--ink);
+    border-radius: 4px 14px 4px 14px;
+    flex-shrink: 0;
+    filter: sepia(0.12) contrast(1.02);
+  }
+  .detail-page-body{ min-width: 0; }
+  .detail-page-body h3{
+    font-family: 'Caveat', cursive;
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    color: var(--ink);
+  }
+  .detail-page-desc{
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    color: var(--sage);
+    margin: 0 0 10px;
+  }
+  .detail-extract{
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin: 0 0 12px;
+  }
+  .detail-readmore{
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--rust);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--rust);
+  }
+  .detail-readmore:hover{ color: var(--ink); border-color: var(--ink); }
 
-    .entry{
-      grid-template-columns:70px 70px minmax(0,1fr);
-      gap:15px;
-      padding:22px;
-    }
+  .related-wrap{ margin-top: 20px; }
+  .related-label{
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin: 0 0 8px;
+  }
+  .related-chips{ display: flex; flex-wrap: wrap; gap: 8px; }
+  .related-chips a{
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--ink);
+    background: var(--paper-deep);
+    border: 1px solid var(--ink);
+    border-radius: 20px;
+    padding: 5px 12px;
+    text-decoration: none;
+  }
+  .related-chips a:hover{ background: var(--rust); color: var(--card); border-color: var(--rust); }
 
-    .entry .thumb{
-      width:70px;
-      height:70px;
-    }
+  .detail-loading{
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    color: var(--pencil);
   }
 
-  @media (max-width:560px){
-    body{padding:10px;}
-
-    .masthead h1{
-      font-size:42px;
-      letter-spacing:-2px;
-    }
-
-    .dial{
-      grid-template-columns:1fr 1fr;
-    }
-
-    .entry{
-      grid-template-columns:1fr;
-      gap:9px;
-    }
-
-    .entry .year{padding-top:0;}
-    .entry .thumb{width:100%;height:150px;}
+  @media (max-width: 560px){
+    .detail-page{ flex-direction: column; }
+    .detail-img{ width: 100%; height: 200px; }
   }
-
 </style>
 </head>
 <body>
 
-<header>
-  <div class="masthead">
-    <p class="kicker">ARCHIVE · ON THIS DAY</p>
-    <h1 id="dateHeading">Loading…</h1>
-    <p class="sub" id="dateSub">&nbsp;</p>
+<div class="wrap" id="plateWrap">
+
+  <div id="mainView">
+  <header>
+    <svg class="leaf tl" width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 65 C 10 40, 25 15, 55 6" stroke="#6B7C59" stroke-width="1.6" fill="none"/>
+      <path d="M18 46 C 24 40, 30 38, 34 30" stroke="#6B7C59" stroke-width="1.3" fill="none"/>
+      <path d="M28 30 C 33 26, 38 22, 44 14" stroke="#6B7C59" stroke-width="1.3" fill="none"/>
+      <ellipse cx="30" cy="36" rx="7" ry="3.4" transform="rotate(-40 30 36)" stroke="#6B7C59" stroke-width="1.2" fill="none"/>
+      <ellipse cx="41" cy="20" rx="6" ry="3" transform="rotate(-40 41 20)" stroke="#6B7C59" stroke-width="1.2" fill="none"/>
+    </svg>
+    <svg class="leaf tr" width="60" height="60" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 65 C 10 40, 25 15, 55 6" stroke="#B4552F" stroke-width="1.6" fill="none"/>
+      <ellipse cx="30" cy="36" rx="7" ry="3.4" transform="rotate(-40 30 36)" stroke="#B4552F" stroke-width="1.2" fill="none"/>
+      <ellipse cx="41" cy="20" rx="6" ry="3" transform="rotate(-40 41 20)" stroke="#B4552F" stroke-width="1.2" fill="none"/>
+    </svg>
+
+    <div class="masthead">
+      <p class="kicker">Field Notes · Archive Sketchbook</p>
+      <h1 id="dateHeading">Loading…</h1>
+      <p class="sub" id="dateSub">&nbsp;</p>
+    </div>
+
+    <div class="dial">
+      <select id="monthSelect" aria-label="Month"></select>
+      <select id="daySelect" aria-label="Day"></select>
+      <button id="todayBtn" type="button">Today</button>
+    </div>
+  </header>
+
+  <nav class="cats" id="tabs">
+    <button data-type="events" class="active">Events</button>
+    <button data-type="births">Births</button>
+    <button data-type="deaths">Deaths</button>
+    <button data-type="holidays">Holidays</button>
+  </nav>
+
+  <div class="layout">
+    <aside class="index-col">
+      <p class="idx-label">Index</p>
+      <ol id="indexList"><li class="index-empty" style="list-style:none;">No entries yet.</li></ol>
+    </aside>
+
+    <div class="plates" id="results">
+      <div class="state-msg">Pick a date above to open today's plates.</div>
+    </div>
+  </div>
+  </div><!-- /mainView -->
+
+  <div id="detailView" style="display:none;">
+    <button id="backBtn" class="back-btn" type="button">← Back to sketchbook</button>
+
+    <article class="plate detail-plate">
+      <span class="detail-type" id="detailType">Events</span>
+      <p class="yr detail-year" id="detailYear">—</p>
+      <p class="txt detail-text" id="detailText"></p>
+
+      <div class="detail-page" id="detailPage" style="display:none;">
+        <img id="detailImg" class="detail-img" src="" alt="" style="display:none;">
+        <div class="detail-page-body">
+          <h3 id="detailPageTitle"></h3>
+          <p id="detailPageDesc" class="detail-page-desc"></p>
+          <p id="detailExtract" class="detail-extract"></p>
+          <a id="detailPageLink" href="#" target="_blank" rel="noopener" class="detail-readmore">Read full article on Wikipedia →</a>
+        </div>
+      </div>
+
+      <div class="related-wrap" id="relatedWrap" style="display:none;">
+        <p class="related-label">Also mentioned on this page</p>
+        <div class="related-chips" id="relatedChips"></div>
+      </div>
+    </article>
   </div>
 
-  <div class="dial">
-    <select id="monthSelect" aria-label="Month"></select>
-    <span class="slash">/</span>
-    <select id="daySelect" aria-label="Day"></select>
-    <button id="todayBtn" type="button">Today</button>
+  <footer>Data from Wikipedia's On This Day API · hover a plate to magnify · click a plate to read more</footer>
+</div>
+
+<div id="magnifier">
+  <div class="handle"></div>
+  <div class="ferrule"></div>
+  <div class="ring"></div>
+  <div id="lens">
+    <div id="lensContent"></div>
+    <div class="lens-empty" id="lensEmpty">move me over a plate</div>
   </div>
-</header>
-
-<nav class="tabs" id="tabs">
-  <button data-type="events" class="active">Events</button>
-  <button data-type="births">Births</button>
-  <button data-type="deaths">Deaths</button>
-  <button data-type="holidays">Holidays</button>
-</nav>
-
-<main id="results">
-  <div class="state-msg">Pick a date to browse history.</div>
-</main>
-
-<footer>Data from Wikipedia's On This Day API · English Wikipedia</footer>
+</div>
 
 <script>
   const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -349,88 +584,69 @@
   const dateHeading = document.getElementById('dateHeading');
   const dateSub = document.getElementById('dateSub');
   const results = document.getElementById('results');
+  const indexList = document.getElementById('indexList');
   const tabs = document.getElementById('tabs');
+  const plateWrap = document.getElementById('plateWrap');
+  const lens = document.getElementById('lens');
+  const lensContent = document.getElementById('lensContent');
+  const lensEmpty = document.getElementById('lensEmpty');
+  const magnifier = document.getElementById('magnifier');
+  const mainView = document.getElementById('mainView');
+  const detailView = document.getElementById('detailView');
+  const backBtn = document.getElementById('backBtn');
+  const detailType = document.getElementById('detailType');
+  const detailYear = document.getElementById('detailYear');
+  const detailText = document.getElementById('detailText');
+  const detailPage = document.getElementById('detailPage');
+  const detailImg = document.getElementById('detailImg');
+  const detailPageTitle = document.getElementById('detailPageTitle');
+  const detailPageDesc = document.getElementById('detailPageDesc');
+  const detailExtract = document.getElementById('detailExtract');
+  const detailPageLink = document.getElementById('detailPageLink');
+  const relatedWrap = document.getElementById('relatedWrap');
+  const relatedChips = document.getElementById('relatedChips');
 
   let currentType = 'events';
-  let cache = {}; // key: "month-day" -> full API response
+  let currentEntries = [];
+  let cache = {};
+  const ZOOM = 1.9;
 
-  function daysInMonth(m){
-    return new Date(2024, m, 0).getDate(); // 2024 = leap year, so Feb gets 29
-  }
+  function daysInMonth(m){ return new Date(2024, m, 0).getDate(); }
 
   function populateMonths(){
-    MONTHS.forEach((name, i) => {
+    MONTHS.forEach((name,i)=>{
       const opt = document.createElement('option');
-      opt.value = i + 1;
-      opt.textContent = name;
+      opt.value = i+1; opt.textContent = name;
       monthSelect.appendChild(opt);
     });
   }
-
   function populateDays(month){
     const count = daysInMonth(month);
-    const prevValue = parseInt(daySelect.value) || 1;
+    const prev = parseInt(daySelect.value) || 1;
     daySelect.innerHTML = '';
-    for(let d = 1; d <= count; d++){
+    for(let d=1; d<=count; d++){
       const opt = document.createElement('option');
-      opt.value = d;
-      opt.textContent = String(d).padStart(2,'0');
+      opt.value = d; opt.textContent = String(d).padStart(2,'0');
       daySelect.appendChild(opt);
     }
-    daySelect.value = Math.min(prevValue, count);
+    daySelect.value = Math.min(prev, count);
   }
-
   function setToday(){
     const now = new Date();
-    monthSelect.value = now.getMonth() + 1;
-    populateDays(now.getMonth() + 1);
+    monthSelect.value = now.getMonth()+1;
+    populateDays(now.getMonth()+1);
     daySelect.value = now.getDate();
   }
 
   async function fetchDay(month, day){
     const key = `${month}-${day}`;
     if(cache[key]) return cache[key];
-    const mm = String(month).padStart(2,'0');
-    const dd = String(day).padStart(2,'0');
-    const url = `https://en.wikipedia.org/api/rest_v1/feed/onthisday/all/${mm}/${dd}`;
-    const res = await fetch(url);
-    if(!res.ok) throw new Error('Failed to fetch: ' + res.status);
+    const mm = String(month).padStart(2,'0'), dd = String(day).padStart(2,'0');
+    const res = await fetch(`https://en.wikipedia.org/api/rest_v1/feed/onthisday/all/${mm}/${dd}`);
+    if(!res.ok) throw new Error('fetch failed');
     const data = await res.json();
     cache[key] = data;
     return data;
-  }
-
-  function renderEntries(list, type){
-    if(!list || list.length === 0){
-      results.innerHTML = `<div class="state-msg">No ${type} found for this date.</div>`;
-      return;
-    }
-
-    // Sort chronologically ascending by year when available
-    const sorted = [...list].sort((a,b) => (a.year ?? 0) - (b.year ?? 0));
-
-    results.innerHTML = sorted.map(item => {
-      const year = item.year !== undefined ? item.year : '';
-      const page = item.pages && item.pages[0];
-      const thumb = page && page.thumbnail ? page.thumbnail.source : null;
-
-      const refs = (item.pages || []).slice(0, 4).map(p => {
-        const title = p.normalizedtitle || p.title || '';
-        const link = p.content_urls?.desktop?.page || `https://en.wikipedia.org/wiki/${encodeURIComponent(p.title || '')}`;
-        return `<a href="${link}" target="_blank" rel="noopener">${escapeHtml(title)}</a>`;
-      }).join('');
-
-      return `
-        <article class="entry">
-          <div class="year mono">${year}</div>
-          ${thumb ? `<img class="thumb" src="${thumb}" alt="" loading="lazy">` : ''}
-          <div class="body">
-            <p class="text">${escapeHtml(item.text || '')}</p>
-            ${refs ? `<div class="refs">${refs}</div>` : ''}
-          </div>
-        </article>
-      `;
-    }).join('');
   }
 
   function escapeHtml(str){
@@ -439,18 +655,180 @@
     return div.innerHTML;
   }
 
+  function renderEntries(list, type){
+    if(!list || list.length===0){
+      currentEntries = [];
+      results.innerHTML = `<div class="state-msg">No ${type} found for this date.</div>`;
+      indexList.innerHTML = `<li class="index-empty" style="list-style:none;">Nothing on record.</li>`;
+      syncLens();
+      return;
+    }
+    const sorted = [...list].sort((a,b)=>(a.year??0)-(b.year??0));
+    currentEntries = sorted;
+
+    results.innerHTML = sorted.map((item,i)=>{
+      const year = item.year !== undefined ? item.year : '';
+      const page = item.pages && item.pages[0];
+      const thumb = page && page.thumbnail ? page.thumbnail.source : null;
+      const refs = (item.pages||[]).slice(0,4).map(p=>{
+        const title = p.normalizedtitle || p.title || '';
+        const link = p.content_urls?.desktop?.page || `https://en.wikipedia.org/wiki/${encodeURIComponent(p.title||'')}`;
+        return `<a href="${link}" target="_blank" rel="noopener">${escapeHtml(title)}</a>`;
+      }).join('');
+      return `
+        <article class="plate" id="plate-${i}" data-idx="${i}">
+          <p class="yr">${year}</p>
+          ${thumb ? `<img class="thumb" src="${thumb}" alt="" loading="lazy">` : ''}
+          <p class="txt">${escapeHtml(item.text||'')}</p>
+          <div class="refs">${refs}</div>
+        </article>`;
+    }).join('');
+
+    indexList.innerHTML = sorted.map((item,i)=>{
+      const year = item.year !== undefined ? item.year : '—';
+      const snippet = (item.text || '').slice(0, 46);
+      return `<li data-target="plate-${i}"><span class="yr-tag">${year}</span> — ${escapeHtml(snippet)}${item.text && item.text.length>46 ? '…' : ''}</li>`;
+    }).join('');
+
+    syncLens();
+  }
+
+  function syncLens(){
+    // keep the lens's magnified clone in sync with the live content
+    lensContent.innerHTML = results.innerHTML;
+    updateZoomContent();
+  }
+
+  /* ---- Detail page: open a single event/birth/death/holiday ---- */
+  const TYPE_LABELS = { events: 'Event', births: 'Birth', deaths: 'Death', holidays: 'Holiday' };
+
+  function showDetailContent(item){
+    detailType.textContent = TYPE_LABELS[currentType] || currentType;
+    detailYear.textContent = item.year !== undefined ? item.year : '—';
+    detailText.textContent = item.text || '';
+
+    const page = item.pages && item.pages[0];
+    const otherPages = (item.pages || []).slice(1);
+
+    if(otherPages.length){
+      relatedWrap.style.display = '';
+      relatedChips.innerHTML = otherPages.map(p=>{
+        const title = p.normalizedtitle || p.title || '';
+        const link = p.content_urls?.desktop?.page || `https://en.wikipedia.org/wiki/${encodeURIComponent(p.title||'')}`;
+        return `<a href="${link}" target="_blank" rel="noopener">${escapeHtml(title)}</a>`;
+      }).join('');
+    } else {
+      relatedWrap.style.display = 'none';
+      relatedChips.innerHTML = '';
+    }
+
+    if(page){
+      detailPage.style.display = 'flex';
+      detailPageTitle.textContent = page.normalizedtitle || page.title || '';
+      detailPageDesc.textContent = 'Loading more from Wikipedia…';
+      detailPageDesc.classList.add('detail-loading');
+      detailExtract.textContent = '';
+      detailPageLink.href = page.content_urls?.desktop?.page || `https://en.wikipedia.org/wiki/${encodeURIComponent(page.title||'')}`;
+
+      if(page.thumbnail){
+        detailImg.src = page.thumbnail.source;
+        detailImg.style.display = '';
+      } else {
+        detailImg.style.display = 'none';
+      }
+
+      // fetch a richer summary for the primary related page
+      fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(page.title)}`)
+        .then(r => r.ok ? r.json() : null)
+        .then(summary => {
+          if(!summary) return;
+          detailPageDesc.classList.remove('detail-loading');
+          detailPageDesc.textContent = summary.description || '';
+          detailExtract.textContent = summary.extract || '';
+          const img = summary.originalimage || summary.thumbnail;
+          if(img){
+            detailImg.src = img.source;
+            detailImg.style.display = '';
+          }
+        })
+        .catch(() => {
+          detailPageDesc.textContent = '';
+        });
+    } else {
+      detailPage.style.display = 'none';
+    }
+  }
+
+  function openDetail(index){
+    if(!currentEntries[index]) return;
+    const month = monthSelect.value, day = daySelect.value;
+    location.hash = `${currentType}/${month}/${day}/${index}`;
+  }
+
+  function closeDetail(){
+    if(location.hash) history.pushState(null, '', location.pathname + location.search);
+    mainView.style.display = '';
+    detailView.style.display = 'none';
+    magnifier.style.display = '';
+    initMagnifier();
+  }
+
+  results.addEventListener('click', (e) => {
+    if(e.target.closest('a')) return; // let outbound wiki links work normally
+    const article = e.target.closest('.plate');
+    if(!article) return;
+    openDetail(parseInt(article.dataset.idx));
+  });
+
+  backBtn.addEventListener('click', closeDetail);
+
+  function parseHash(){
+    const h = location.hash.replace('#', '');
+    if(!h) return null;
+    const parts = h.split('/');
+    if(parts.length !== 4) return null;
+    const [type, month, day, idx] = parts;
+    const m = parseInt(month), d = parseInt(day), i = parseInt(idx);
+    if(!['events','births','deaths','holidays'].includes(type) || isNaN(m) || isNaN(d) || isNaN(i)) return null;
+    return { type, month: m, day: d, index: i };
+  }
+
+  async function route(){
+    const parsed = parseHash();
+    if(!parsed){
+      closeDetail();
+      return;
+    }
+    const needsReload = parseInt(monthSelect.value) !== parsed.month || parseInt(daySelect.value) !== parsed.day || currentType !== parsed.type;
+    if(needsReload){
+      monthSelect.value = parsed.month;
+      populateDays(parsed.month);
+      daySelect.value = parsed.day;
+      currentType = parsed.type;
+      [...tabs.children].forEach(b => b.classList.toggle('active', b.dataset.type === parsed.type));
+      await loadAndRender();
+    }
+    if(currentEntries[parsed.index]){
+      showDetailContent(currentEntries[parsed.index]);
+      mainView.style.display = 'none';
+      detailView.style.display = '';
+      magnifier.style.display = 'none';
+      window.scrollTo(0, 0);
+    } else {
+      closeDetail();
+    }
+  }
+
   async function loadAndRender(){
     const month = parseInt(monthSelect.value);
     const day = parseInt(daySelect.value);
-
     dateHeading.textContent = `${MONTHS[month-1]} ${day}`;
     dateSub.textContent = 'Fetching from Wikipedia…';
     results.innerHTML = `<div class="state-msg">Loading ${currentType}…</div>`;
-
     try{
       const data = await fetchDay(month, day);
       const list = data[currentType] || [];
-      dateSub.textContent = `${list.length} ${currentType} on this date`;
+      dateSub.textContent = `${list.length} ${currentType} · sketched from the archive`;
       renderEntries(list, currentType);
     }catch(err){
       dateSub.textContent = 'Something went wrong.';
@@ -459,28 +837,118 @@
     }
   }
 
-  monthSelect.addEventListener('change', () => {
-    populateDays(parseInt(monthSelect.value));
-    loadAndRender();
-  });
+  monthSelect.addEventListener('change', ()=>{ populateDays(parseInt(monthSelect.value)); loadAndRender(); });
   daySelect.addEventListener('change', loadAndRender);
-  document.getElementById('todayBtn').addEventListener('click', () => {
-    setToday();
-    loadAndRender();
-  });
+  document.getElementById('todayBtn').addEventListener('click', ()=>{ setToday(); loadAndRender(); });
 
-  tabs.addEventListener('click', (e) => {
+  tabs.addEventListener('click', (e)=>{
     const btn = e.target.closest('button[data-type]');
     if(!btn) return;
     currentType = btn.dataset.type;
-    [...tabs.children].forEach(b => b.classList.toggle('active', b === btn));
+    [...tabs.children].forEach(b=>b.classList.toggle('active', b===btn));
     loadAndRender();
   });
 
-  // init
-  populateMonths();
-  setToday();
-  loadAndRender();
+  indexList.addEventListener('click', (e)=>{
+    const li = e.target.closest('li[data-target]');
+    if(!li) return;
+    const target = document.getElementById(li.dataset.target);
+    if(target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  /* ---- Draggable magnifying glass: grab it, drop it on a plate to magnify ---- */
+  const platesCol = () => document.querySelector('.plates');
+
+  let dragging = false;
+  let grabOffsetX = 0, grabOffsetY = 0;
+  let lensCenter = { x: 160, y: 260 };
+
+  function clampLensCenter(){
+    const half = magnifier.offsetWidth / 2;
+    lensCenter.x = Math.max(half, Math.min(window.innerWidth - half, lensCenter.x));
+    lensCenter.y = Math.max(half, Math.min(window.innerHeight - half, lensCenter.y));
+  }
+
+  function positionMagnifier(){
+    magnifier.style.left = (lensCenter.x - magnifier.offsetWidth / 2) + 'px';
+    magnifier.style.top = (lensCenter.y - magnifier.offsetHeight / 2) + 'px';
+    updateZoomContent();
+  }
+
+  function updateZoomContent(){
+    const col = platesCol();
+    if(!col){ lensEmpty.style.display = 'flex'; return; }
+
+    const rect = col.getBoundingClientRect();
+    const lensRect = lens.getBoundingClientRect();
+    const lensRadius = lensRect.width / 2;
+    const cx = lensRect.left + lensRadius;
+    const cy = lensRect.top + lensRadius;
+    const x = cx - rect.left;
+    const y = cy - rect.top;
+
+    if(x < -60 || y < -60 || x > rect.width + 60 || y > rect.height + 60){
+      lensEmpty.style.display = 'flex';
+      return;
+    }
+    lensEmpty.style.display = 'none';
+    lensContent.style.width = rect.width + 'px';
+    lensContent.style.transform = `scale(${ZOOM})`;
+    lensContent.style.left = (lensRadius - x * ZOOM) + 'px';
+    lensContent.style.top = (lensRadius - y * ZOOM) + 'px';
+  }
+
+  function startDrag(clientX, clientY){
+    dragging = true;
+    magnifier.classList.add('dragging');
+    grabOffsetX = clientX - lensCenter.x;
+    grabOffsetY = clientY - lensCenter.y;
+  }
+  function moveDrag(clientX, clientY){
+    if(!dragging) return;
+    lensCenter.x = clientX - grabOffsetX;
+    lensCenter.y = clientY - grabOffsetY;
+    clampLensCenter();
+    positionMagnifier();
+  }
+  function endDrag(){
+    dragging = false;
+    magnifier.classList.remove('dragging');
+  }
+
+  magnifier.addEventListener('pointerdown', (e) => {
+    magnifier.setPointerCapture(e.pointerId);
+    startDrag(e.clientX, e.clientY);
+  });
+  magnifier.addEventListener('pointermove', (e) => moveDrag(e.clientX, e.clientY));
+  magnifier.addEventListener('pointerup', endDrag);
+  magnifier.addEventListener('pointercancel', endDrag);
+  window.addEventListener('resize', () => { clampLensCenter(); positionMagnifier(); });
+
+  function initMagnifier(){
+    const col = platesCol();
+    if(col){
+      const rect = col.getBoundingClientRect();
+      lensCenter = { x: rect.left + 95, y: rect.top + 140 };
+    }
+    clampLensCenter();
+    positionMagnifier();
+  }
+
+  window.addEventListener('hashchange', route);
+
+  async function init(){
+    populateMonths();
+    const parsed = parseHash();
+    if(parsed){
+      await route();
+    } else {
+      setToday();
+      await loadAndRender();
+    }
+    initMagnifier();
+  }
+  init();
 </script>
 
 </body>
