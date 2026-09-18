@@ -3,267 +3,434 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>On This Day — Timeline</title>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<title>On This Day — Archive</title>
 <style>
   :root{
-    --paper: #FAF8F4;
-    --ink: #1B1B1B;
-    --ink-soft: #6B6558;
-    --rust: #B5502D;
-    --line: #DDD8CC;
+    --page: #f3eee9;
+    --panel: #765858;
+    --panel-deep: #654b4b;
+    --card: #ffffff;
+    --soft: #eee8e3;
+    --text: #171515;
+    --muted: #6d6662;
+    --accent: #d8a34b;
+    --accent-dark: #91453d;
+    --line: rgba(255,255,255,.18);
+    --line-strong: rgba(255,255,255,.32);
+    --shadow: 0 22px 55px rgba(43, 27, 27, .18);
+    --radius: 18px;
   }
+
   *{box-sizing:border-box;}
-  html,body{margin:0;}
+  html,body{margin:0;padding:0;}
+
   body{
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'Source Serif 4', serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 60px 20px 90px;
+    min-height:100vh;
+    background:var(--page);
+    color:var(--text);
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    padding:32px;
   }
-  .sans{ font-family: 'Inter', sans-serif; }
 
-  .masthead{
-    width: 100%;
-    max-width: 620px;
-    text-align: center;
-    margin-bottom: 8px;
+  .mono{font-family:"IBM Plex Mono",monospace;}
+
+  body::before{
+    content:"";
+    position:fixed;
+    width:420px;
+    height:420px;
+    border-radius:50%;
+    background:rgba(118,88,88,.08);
+    top:-230px;
+    right:-160px;
+    pointer-events:none;
   }
-  .masthead p.eyebrow{
-    font-family: 'Inter', sans-serif;
-    font-size: 12.5px;
-    color: var(--ink-soft);
-    margin: 0 0 10px;
+
+  header{
+    width:min(1120px,100%);
+    min-height:190px;
+    margin:0 auto;
+    padding:42px clamp(24px,5vw,58px);
+    background:var(--panel);
+    border:0;
+    border-radius:24px 24px 0 0;
+    box-shadow:var(--shadow);
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:center;
+    gap:34px;
   }
+
+  .masthead .kicker{
+    margin:0 0 10px;
+    color:rgba(255,255,255,.72);
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.12em;
+  }
+
   .masthead h1{
-    font-size: clamp(30px, 6vw, 44px);
-    font-weight: 600;
-    margin: 0;
-    letter-spacing: -0.01em;
+    margin:0;
+    color:#fff;
+    font-size:clamp(38px,6vw,68px);
+    font-weight:750;
+    letter-spacing:-2.8px;
+    line-height:.98;
   }
 
-  /* ---- Date navigator ---- */
-  .nav-row{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    margin: 28px 0 6px;
-    font-family: 'Inter', sans-serif;
-  }
-  .nav-row select{
-    background: transparent;
-    border: none;
-    border-bottom: 1.5px solid var(--ink);
-    font-family: 'Source Serif 4', serif;
-    font-size: 17px;
-    color: var(--ink);
-    padding: 4px 4px 6px;
-    cursor: pointer;
-    text-align: center;
-  }
-  .nav-row select:focus-visible{ outline: 2px solid var(--rust); outline-offset: 3px; }
-  .nav-row button{
-    background: none;
-    border: none;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    color: var(--rust);
-    cursor: pointer;
-    padding: 4px 8px;
-    text-decoration: underline;
-    text-underline-offset: 3px;
+  .masthead .sub{
+    margin:14px 0 0;
+    color:rgba(255,255,255,.75);
+    font-size:14px;
   }
 
-  .cats{
-    display: flex;
-    justify-content: center;
-    gap: 22px;
-    margin: 22px 0 4px;
-    font-family: 'Inter', sans-serif;
-    border-bottom: 1px solid var(--line);
-    width: 100%;
-    max-width: 620px;
-    padding-bottom: 0;
-  }
-  .cats button{
-    background: none;
-    border: none;
-    font-size: 13.5px;
-    color: var(--ink-soft);
-    padding: 10px 2px 12px;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-  }
-  .cats button.active{ color: var(--ink); border-bottom-color: var(--rust); }
-
-  .status{
-    font-family: 'Inter', sans-serif;
-    font-size: 12.5px;
-    color: var(--ink-soft);
-    margin: 18px 0 6px;
+  .dial{
+    min-width:320px;
+    padding:18px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:16px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
   }
 
-  /* ---- Vertical timeline ---- */
-  .timeline{
-    width: 100%;
-    max-width: 620px;
-    position: relative;
-    padding-left: 26px;
-    margin-top: 10px;
+  .dial select{
+    appearance:none;
+    width:100%;
+    min-height:46px;
+    padding:0 13px;
+    background:#fff;
+    color:var(--text);
+    border:1px solid transparent;
+    border-radius:10px;
+    font:500 13px "IBM Plex Mono",monospace;
+    cursor:pointer;
+    outline:none;
   }
-  .timeline::before{
-    content: '';
-    position: absolute;
-    left: 4px;
-    top: 6px;
-    bottom: 6px;
-    width: 1px;
-    background: var(--line);
+
+  .dial select:focus-visible{
+    box-shadow:0 0 0 3px rgba(255,255,255,.3);
   }
-  .node{
-    position: relative;
-    padding-bottom: 34px;
+
+  .dial select option{background:#fff;color:var(--text);}
+
+  .dial .slash{display:none;}
+
+  .dial button{
+    grid-column:1 / -1;
+    min-height:42px;
+    margin:2px 0 0;
+    background:var(--accent);
+    color:#261d13;
+    border:0;
+    border-radius:10px;
+    font:700 12px "IBM Plex Mono",monospace;
+    letter-spacing:.03em;
+    cursor:pointer;
+    transition:transform .15s ease,filter .15s ease;
   }
-  .node::before{
-    content: '';
-    position: absolute;
-    left: -26px;
-    top: 6px;
-    width: 9px; height: 9px;
-    border-radius: 50%;
-    background: var(--rust);
-    border: 2px solid var(--paper);
-    box-shadow: 0 0 0 1px var(--rust);
+
+  .dial button:hover{filter:brightness(1.06);transform:translateY(-1px);}
+  .dial button:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+
+  nav.tabs{
+    width:min(1120px,100%);
+    margin:0 auto;
+    padding:20px clamp(24px,5vw,58px) 0;
+    background:var(--panel);
+    display:flex;
+    gap:9px;
   }
-  .node .yr{
-    font-size: 22px;
-    font-weight: 600;
-    margin: 0 0 6px;
-    color: var(--ink);
+
+  nav.tabs button{
+    flex:0 0 auto;
+    min-width:115px;
+    padding:12px 18px;
+    background:rgba(255,255,255,.08);
+    color:rgba(255,255,255,.68);
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:10px 10px 0 0;
+    font:700 11px "IBM Plex Mono",monospace;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:background .15s ease,color .15s ease;
   }
-  .node .txt{
-    font-size: 16px;
-    line-height: 1.6;
-    margin: 0 0 8px;
-    max-width: 60ch;
+
+  nav.tabs button.active{
+    color:var(--text);
+    background:var(--card);
+    border-color:var(--card);
   }
-  .node .refs{ font-family: 'Inter', sans-serif; }
-  .node .refs a{
-    font-size: 12px;
-    color: var(--ink-soft);
-    text-decoration: none;
-    border-bottom: 1px solid var(--line);
-    margin-right: 14px;
-  }
-  .node .refs a:hover{ color: var(--rust); border-color: var(--rust); }
-  .node img{
-    width: 100%; max-width: 280px;
-    border-radius: 2px;
-    margin: 10px 0 4px;
-    display: block;
+
+  nav.tabs button:hover:not(.active){color:#fff;background:rgba(255,255,255,.13);}
+  nav.tabs button:focus-visible{outline:2px solid #fff;outline-offset:-2px;}
+
+  main{
+    width:min(1120px,100%);
+    margin:0 auto;
+    background:var(--card);
+    border:0;
+    border-radius:0 0 24px 24px;
+    min-height:390px;
+    padding:0;
+    box-shadow:var(--shadow);
+    overflow:hidden;
   }
 
   .state-msg{
-    font-family: 'Inter', sans-serif;
-    color: var(--ink-soft);
-    text-align: center;
-    padding: 50px 0;
-    font-size: 14px;
+    min-height:300px;
+    padding:90px 24px;
+    display:grid;
+    place-items:center;
+    text-align:center;
+    color:var(--muted);
+    font:500 13px "IBM Plex Mono",monospace;
+  }
+
+  .entry{
+    display:grid;
+    grid-template-columns:82px 82px minmax(0,1fr);
+    gap:22px;
+    align-items:start;
+    padding:25px clamp(24px,4vw,42px);
+    border-bottom:1px solid var(--soft);
+  }
+
+  .entry:last-child{border-bottom:0;}
+
+  .entry .year{
+    padding-top:3px;
+    color:var(--accent-dark);
+    font:700 14px "IBM Plex Mono",monospace;
+  }
+
+  .entry .body{min-width:0;}
+
+  .entry .text{
+    margin:0 0 10px;
+    color:var(--text);
+    font-size:17px;
+    font-weight:500;
+    line-height:1.62;
+  }
+
+  .entry .refs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px 14px;
+  }
+
+  .entry .refs a{
+    color:var(--accent-dark);
+    text-decoration:none;
+    border-bottom:1px dotted currentColor;
+    font:500 11px "IBM Plex Mono",monospace;
+  }
+
+  .entry .refs a:hover{color:var(--panel);}
+
+  .entry .thumb{
+    width:82px;
+    height:82px;
+    object-fit:cover;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:var(--soft);
   }
 
   footer{
-    max-width: 620px; width: 100%;
-    text-align: center;
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    color: var(--ink-soft);
-    margin-top: 30px;
-    opacity: 0.8;
+    width:min(1120px,100%);
+    margin:18px auto 0;
+    color:#817873;
+    text-align:center;
+    font:500 10px "IBM Plex Mono",monospace;
+    opacity:.8;
   }
 
-  @media (prefers-reduced-motion: reduce){ *{ transition: none !important; } }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;}
+  }
+
+  @media (max-width:780px){
+    body{padding:16px;}
+
+    header{
+      grid-template-columns:1fr;
+      gap:26px;
+      padding:30px 22px 24px;
+      border-radius:20px 20px 0 0;
+    }
+
+    .dial{min-width:0;}
+
+    nav.tabs{
+      padding:16px 16px 0;
+      overflow-x:auto;
+    }
+
+    nav.tabs button{
+      min-width:100px;
+    }
+
+    main{border-radius:0 0 20px 20px;}
+
+    .entry{
+      grid-template-columns:70px 70px minmax(0,1fr);
+      gap:15px;
+      padding:22px;
+    }
+
+    .entry .thumb{
+      width:70px;
+      height:70px;
+    }
+  }
+
+  @media (max-width:560px){
+    body{padding:10px;}
+
+    .masthead h1{
+      font-size:42px;
+      letter-spacing:-2px;
+    }
+
+    .dial{
+      grid-template-columns:1fr 1fr;
+    }
+
+    .entry{
+      grid-template-columns:1fr;
+      gap:9px;
+    }
+
+    .entry .year{padding-top:0;}
+    .entry .thumb{width:100%;height:150px;}
+  }
+
 </style>
 </head>
 <body>
 
-<div class="masthead">
-  <p class="eyebrow sans">A record of what happened</p>
-  <h1 id="dateHeading">On This Day</h1>
-</div>
+<header>
+  <div class="masthead">
+    <p class="kicker">ARCHIVE · ON THIS DAY</p>
+    <h1 id="dateHeading">Loading…</h1>
+    <p class="sub" id="dateSub">&nbsp;</p>
+  </div>
 
-<div class="nav-row">
-  <select id="monthSelect" aria-label="Month"></select>
-  <select id="daySelect" aria-label="Day"></select>
-  <button id="todayBtn" type="button">Jump to today</button>
-</div>
+  <div class="dial">
+    <select id="monthSelect" aria-label="Month"></select>
+    <span class="slash">/</span>
+    <select id="daySelect" aria-label="Day"></select>
+    <button id="todayBtn" type="button">Today</button>
+  </div>
+</header>
 
-<nav class="cats" id="tabs">
+<nav class="tabs" id="tabs">
   <button data-type="events" class="active">Events</button>
   <button data-type="births">Births</button>
   <button data-type="deaths">Deaths</button>
   <button data-type="holidays">Holidays</button>
 </nav>
 
-<p class="status" id="statusLine">&nbsp;</p>
+<main id="results">
+  <div class="state-msg">Pick a date to browse history.</div>
+</main>
 
-<div class="timeline" id="results">
-  <div class="state-msg">Pick a date to see its history.</div>
-</div>
-
-<footer>Data from Wikipedia's On This Day API</footer>
+<footer>Data from Wikipedia's On This Day API · English Wikipedia</footer>
 
 <script>
   const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   const monthSelect = document.getElementById('monthSelect');
   const daySelect = document.getElementById('daySelect');
   const dateHeading = document.getElementById('dateHeading');
-  const statusLine = document.getElementById('statusLine');
+  const dateSub = document.getElementById('dateSub');
   const results = document.getElementById('results');
   const tabs = document.getElementById('tabs');
-  let currentType = 'events';
-  let cache = {};
 
-  function daysInMonth(m){ return new Date(2024, m, 0).getDate(); }
+  let currentType = 'events';
+  let cache = {}; // key: "month-day" -> full API response
+
+  function daysInMonth(m){
+    return new Date(2024, m, 0).getDate(); // 2024 = leap year, so Feb gets 29
+  }
 
   function populateMonths(){
-    MONTHS.forEach((name,i)=>{
+    MONTHS.forEach((name, i) => {
       const opt = document.createElement('option');
-      opt.value = i+1; opt.textContent = name;
+      opt.value = i + 1;
+      opt.textContent = name;
       monthSelect.appendChild(opt);
     });
   }
+
   function populateDays(month){
     const count = daysInMonth(month);
-    const prev = parseInt(daySelect.value) || 1;
+    const prevValue = parseInt(daySelect.value) || 1;
     daySelect.innerHTML = '';
-    for(let d=1; d<=count; d++){
+    for(let d = 1; d <= count; d++){
       const opt = document.createElement('option');
-      opt.value = d; opt.textContent = String(d).padStart(2,'0');
+      opt.value = d;
+      opt.textContent = String(d).padStart(2,'0');
       daySelect.appendChild(opt);
     }
-    daySelect.value = Math.min(prev, count);
+    daySelect.value = Math.min(prevValue, count);
   }
+
   function setToday(){
     const now = new Date();
-    monthSelect.value = now.getMonth()+1;
-    populateDays(now.getMonth()+1);
+    monthSelect.value = now.getMonth() + 1;
+    populateDays(now.getMonth() + 1);
     daySelect.value = now.getDate();
   }
 
   async function fetchDay(month, day){
     const key = `${month}-${day}`;
     if(cache[key]) return cache[key];
-    const mm = String(month).padStart(2,'0'), dd = String(day).padStart(2,'0');
-    const res = await fetch(`https://en.wikipedia.org/api/rest_v1/feed/onthisday/all/${mm}/${dd}`);
-    if(!res.ok) throw new Error('fetch failed');
+    const mm = String(month).padStart(2,'0');
+    const dd = String(day).padStart(2,'0');
+    const url = `https://en.wikipedia.org/api/rest_v1/feed/onthisday/all/${mm}/${dd}`;
+    const res = await fetch(url);
+    if(!res.ok) throw new Error('Failed to fetch: ' + res.status);
     const data = await res.json();
     cache[key] = data;
     return data;
+  }
+
+  function renderEntries(list, type){
+    if(!list || list.length === 0){
+      results.innerHTML = `<div class="state-msg">No ${type} found for this date.</div>`;
+      return;
+    }
+
+    // Sort chronologically ascending by year when available
+    const sorted = [...list].sort((a,b) => (a.year ?? 0) - (b.year ?? 0));
+
+    results.innerHTML = sorted.map(item => {
+      const year = item.year !== undefined ? item.year : '';
+      const page = item.pages && item.pages[0];
+      const thumb = page && page.thumbnail ? page.thumbnail.source : null;
+
+      const refs = (item.pages || []).slice(0, 4).map(p => {
+        const title = p.normalizedtitle || p.title || '';
+        const link = p.content_urls?.desktop?.page || `https://en.wikipedia.org/wiki/${encodeURIComponent(p.title || '')}`;
+        return `<a href="${link}" target="_blank" rel="noopener">${escapeHtml(title)}</a>`;
+      }).join('');
+
+      return `
+        <article class="entry">
+          <div class="year mono">${year}</div>
+          ${thumb ? `<img class="thumb" src="${thumb}" alt="" loading="lazy">` : ''}
+          <div class="body">
+            <p class="text">${escapeHtml(item.text || '')}</p>
+            ${refs ? `<div class="refs">${refs}</div>` : ''}
+          </div>
+        </article>
+      `;
+    }).join('');
   }
 
   function escapeHtml(str){
@@ -272,63 +439,49 @@
     return div.innerHTML;
   }
 
-  function renderEntries(list, type){
-    if(!list || list.length===0){
-      results.innerHTML = `<div class="state-msg">No ${type} found for this date.</div>`;
-      return;
-    }
-    const sorted = [...list].sort((a,b)=>(a.year??0)-(b.year??0));
-    results.innerHTML = sorted.map(item=>{
-      const year = item.year !== undefined ? item.year : '';
-      const page = item.pages && item.pages[0];
-      const thumb = page && page.thumbnail ? page.thumbnail.source : null;
-      const refs = (item.pages||[]).slice(0,4).map(p=>{
-        const title = p.normalizedtitle || p.title || '';
-        const link = p.content_urls?.desktop?.page || `https://en.wikipedia.org/wiki/${encodeURIComponent(p.title||'')}`;
-        return `<a href="${link}" target="_blank" rel="noopener">${escapeHtml(title)}</a>`;
-      }).join('');
-      return `
-        <div class="node">
-          <p class="yr">${year}</p>
-          <p class="txt">${escapeHtml(item.text||'')}</p>
-          ${thumb ? `<img src="${thumb}" alt="" loading="lazy">` : ''}
-          <div class="refs">${refs}</div>
-        </div>`;
-    }).join('');
-  }
-
   async function loadAndRender(){
     const month = parseInt(monthSelect.value);
     const day = parseInt(daySelect.value);
+
     dateHeading.textContent = `${MONTHS[month-1]} ${day}`;
-    statusLine.textContent = 'Fetching…';
-    results.innerHTML = `<div class="state-msg">Loading…</div>`;
+    dateSub.textContent = 'Fetching from Wikipedia…';
+    results.innerHTML = `<div class="state-msg">Loading ${currentType}…</div>`;
+
     try{
       const data = await fetchDay(month, day);
       const list = data[currentType] || [];
-      statusLine.textContent = `${list.length} ${currentType} on record`;
+      dateSub.textContent = `${list.length} ${currentType} on this date`;
       renderEntries(list, currentType);
-    }catch(e){
-      statusLine.textContent = 'Failed to load';
-      results.innerHTML = `<div class="state-msg">Couldn't reach Wikipedia. Try again.</div>`;
-      console.error(e);
+    }catch(err){
+      dateSub.textContent = 'Something went wrong.';
+      results.innerHTML = `<div class="state-msg">Couldn't load data — check your connection and try again.</div>`;
+      console.error(err);
     }
   }
 
-  monthSelect.addEventListener('change', ()=>{ populateDays(parseInt(monthSelect.value)); loadAndRender(); });
+  monthSelect.addEventListener('change', () => {
+    populateDays(parseInt(monthSelect.value));
+    loadAndRender();
+  });
   daySelect.addEventListener('change', loadAndRender);
-  document.getElementById('todayBtn').addEventListener('click', ()=>{ setToday(); loadAndRender(); });
-  tabs.addEventListener('click', (e)=>{
-    const btn = e.target.closest('button[data-type]');
-    if(!btn) return;
-    currentType = btn.dataset.type;
-    [...tabs.children].forEach(b=>b.classList.toggle('active', b===btn));
+  document.getElementById('todayBtn').addEventListener('click', () => {
+    setToday();
     loadAndRender();
   });
 
+  tabs.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-type]');
+    if(!btn) return;
+    currentType = btn.dataset.type;
+    [...tabs.children].forEach(b => b.classList.toggle('active', b === btn));
+    loadAndRender();
+  });
+
+  // init
   populateMonths();
   setToday();
   loadAndRender();
 </script>
+
 </body>
 </html>
